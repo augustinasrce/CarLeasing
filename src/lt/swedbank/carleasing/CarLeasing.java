@@ -12,14 +12,26 @@ public class CarLeasing {
         System.out.println("Down payment size : " + downPaymentPercentage + "%");
         System.out.println();
 
-        double downPaymentAmount = carPriceIncludingVat * downPaymentPercentage / 100;
-        System.out.println("Down payment: " + downPaymentAmount + " EUR");
-        double loanSizeAmount = carPriceIncludingVat - downPaymentAmount;
-        System.out.println("Loan size: " + loanSizeAmount + " EUR");
+        double downPayment = calculateDownPayment(carPriceIncludingVat, downPaymentPercentage);
+        System.out.println("Down payment: " + downPayment + " EUR");
+        double loanSize = calculateLoanSize(carPriceIncludingVat, downPayment);
+        System.out.println("Loan size: " + loanSize + " EUR");
         System.out.println();
 
         System.out.println("Agreement fee: " + AGREEMENT_FEE + " EUR");
-        double initialInstallmentAmount = downPaymentAmount + AGREEMENT_FEE;
-        System.out.println("Initial installment: " + initialInstallmentAmount + " EUR");
+        double initialInstallment = calculateInitialInstallment(downPayment);
+        System.out.println("Initial installment: " + initialInstallment + " EUR");
+    }
+
+    private static double calculateDownPayment(double price, double percentage) {
+        return price * percentage / 100;
+    }
+
+    private static double calculateLoanSize(double price, double downPayment) {
+        return price - downPayment;
+    }
+
+    private static double calculateInitialInstallment(double downPayment) {
+        return AGREEMENT_FEE + downPayment;
     }
 }
