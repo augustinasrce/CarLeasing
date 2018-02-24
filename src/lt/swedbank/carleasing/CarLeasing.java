@@ -9,7 +9,19 @@ public class CarLeasing {
         int downPaymentPercentage = Integer.parseInt(args[1]);
         System.out.println("Car carPriceIncludingVat including VAT: " + carPriceIncludingVat + " EUR");
         System.out.println("Down payment size : " + downPaymentPercentage + "%");
-        boolean isValidParameters = validateCarPrice(carPriceIncludingVat) || validateDownPaymentPercentages(downPaymentPercentage);
+        boolean isValidParameters = false;
+        try {
+            isValidParameters = validateCarPrice(carPriceIncludingVat);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            isValidParameters = isValidParameters || validateDownPaymentPercentages(downPaymentPercentage);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         if (isValidParameters) {
             System.out.println("Leasing parameters are valid");
@@ -40,21 +52,18 @@ public class CarLeasing {
         return AGREEMENT_FEE + downPayment;
     }
 
-    private static boolean validateCarPrice(double price) {
+    private static boolean validateCarPrice(double price) throws IllegalArgumentException {
         if (price < 0) {
-            System.out.println("Car price " + price + " is invalid: it cannot be negative");
-            return false;
+            throw new IllegalArgumentException("Car price " + price + " is invalid: it cannot be negative");
         } else if (price == 0) {
-            System.out.println("Car price " + price + " is invalid: it cannot be zero");
-            return false;
+            throw new IllegalArgumentException("Car price " + price + " is invalid: it cannot be zero");
         }
         return true;
     }
 
-    private static boolean validateDownPaymentPercentages(int percentage) {
+    private static boolean validateDownPaymentPercentages(int percentage) throws IllegalArgumentException {
         if (!(percentage > 0 && percentage < 100)) {
-            System.out.println("Down payment size " + percentage + " is invalid: it must be between 0 and 100");
-            return false;
+            throw new IllegalArgumentException("Down payment size " + percentage + " is invalid: it must be between 0 and 100");
         }
         return true;
     }
