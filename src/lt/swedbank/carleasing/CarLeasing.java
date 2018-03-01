@@ -7,7 +7,7 @@ public class CarLeasing {
     public static void main(String[] args) {
         double carPriceIncludingVat = Double.parseDouble(args[0]);
         int downPaymentPercentage = Integer.parseInt(args[1]);
-        System.out.println("Car carPriceIncludingVat including VAT: " + carPriceIncludingVat + " EUR");
+        System.out.println("Car price including VAT: " + carPriceIncludingVat + " EUR");
         System.out.println("Down payment size : " + downPaymentPercentage + "%");
         boolean isValidParameters = false;
         try {
